@@ -94,7 +94,7 @@ The trained model can be used to predict unseen images by:
 ### 1.Clone the repository
 
 ```bash
-git clone https://github.com/your-username/resnet-image-classifier.git
+git clone https://github.com/xxnxjah/resnet-image-classifier.git
 cd resnet-image-classifier
 ```
 
@@ -123,4 +123,5 @@ Contributions, issues, and feature requests are welcome.
 **Author**: Najah Ilham
 **Role**: Aspiring Computer Vision / Machine Learning Engineer
 **LinkedIn**: *linkedin.com/in/najah-ilham*
+
 
