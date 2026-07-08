@@ -18,18 +18,33 @@ This repository contains the implementation of a binary image classification mod
 
 ## Dataset
 
-The dataset consists of labeled images belonging to the following classes:
+The model was trained on a custom binary traffic sign dataset organized using PyTorch's `ImageFolder` structure.
 
-* `stop`
-* `not_stop`
+### Classes
+
+- `stop`
+- `not_stop`
+
+### Dataset Split
+
+| Split | Stop | Not Stop | Total |
+|-------|-----:|---------:|------:|
+| Training | 87 | 90 | 177 |
+| Validation | 10 | 10 | 20 |
+
+The dataset was randomly divided into **90% training** and **10% validation** sets while preserving the class-wise directory structure.
 
 ## Methodology
 
 ### Data Preprocessing
 
-- Images were resized to **224 × 224** pixels to match the ResNet-18 input requirements.
-- Pixel values were normalized using the ImageNet mean and standard deviation.
-- Data augmentation techniques such as random horizontal flipping and random cropping were applied to improve model generalization.
+The input images were preprocessed using the following transformations:
+
+- Resized to **224 × 224** pixels to match the input size required by ResNet-18.
+- Converted to PyTorch tensors.
+- Normalized using the ImageNet mean and standard deviation.
+
+These preprocessing steps ensure compatibility with the pretrained ResNet-18 model while preserving the original image content.
 
 ### Model Architecture
 
@@ -41,21 +56,13 @@ ResNet-18 was selected because it is a lightweight residual convolutional neural
 
 Instead of training a convolutional neural network from scratch, this project uses a pretrained ResNet-18 model trained on the ImageNet dataset. The pretrained feature extractor enables the model to learn meaningful visual representations while reducing training time and improving performance.
 
-#### Fine-tuning Strategy
+#### Fine-Tuning Strategy
 
-The pretrained convolutional layers were retained, while the final fully connected classification layer was replaced with a new layer corresponding to the number of target classes in the dataset.
-
-(If you froze layers)
-
-During the initial training phase, the pretrained feature extraction layers were frozen while only the final classification layer was trained.
-
-OR
-
-The pretrained network was fine-tuned by updating all layers to better adapt the learned features to the target dataset.
+The pretrained convolutional layers of ResNet-18 were frozen to preserve the features learned from the ImageNet dataset. The original fully connected classification layer was replaced with a new fully connected layer corresponding to the two target classes (`stop` and `not_stop`). During training, only the newly added classifier layer was updated.
 
 #### Activation Function
 
-The model uses the Rectified Linear Unit (ReLU) activation function throughout the convolutional layers. The final output layer produces class scores that are converted into probabilities using the Softmax function.
+The ResNet-18 architecture employs the Rectified Linear Unit (ReLU) activation function throughout its convolutional layers. The final classification layer produces class scores that are interpreted using the softmax operation during prediction.
 
 #### Loss Function
 
@@ -76,11 +83,19 @@ Steps followed during training:
 | Parameter | Value |
 |------------|--------|
 | Framework | PyTorch |
-| Model | ResNet-18 |
+| Base Model | ResNet-18 (ImageNet pretrained) |
 | Input Size | 224 × 224 |
+| Classes | 2 (`stop`, `not_stop`) |
+| Training Images | 177 |
+| Validation Images | 20 |
+| Epochs | 10 |
+| Batch Size | 32 |
 | Optimizer | SGD |
+| Learning Rate | 0.000001 |
+| Momentum | 0.9 |
 | Loss Function | CrossEntropyLoss |
-| Classes | 2 |
+| Learning Rate Scheduler | CyclicLR (Triangular2) |
+| Device | CPU / CUDA (if available) |
 
 ## Model Evaluation
 
@@ -88,13 +103,13 @@ Steps followed during training:
 * Visual inspection of predictions
 * Model set to `eval()` mode during inference
 
-* ## Results
+## Results
 
-The transfer learning approach successfully classified traffic sign images while requiring significantly less training time than training a convolutional neural network from scratch.
+The transfer learning approach successfully learned to distinguish between the `stop` and `not_stop` classes using a relatively small training dataset.
 
-Model evaluation demonstrated stable validation performance with minimal signs of overfitting.
+The model was trained for 10 epochs using a frozen pretrained ResNet-18 feature extractor and demonstrated stable validation performance throughout training.
 
-Sample predictions generated during inference are available in the `results/` directory.
+Example predictions generated during inference are available in the `results/` directory.
 
 ## Inference on New Images
 
