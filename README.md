@@ -152,7 +152,7 @@ resnet-image-classifier/
 ### 1.Clone the repository
 
 ```bash
-git clone https://github.com/xxnxjah/An-Image-Classifier_with-Transfer-Learning.git
+git clone https://github.com/xxnxjah/An-Image-Classifier-with-Transfer-Learning.git
 cd An-Image-Classifier_with-Transfer-Learning
 ```
 
