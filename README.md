@@ -164,7 +164,7 @@ pip install -r requirements.txt
 
 ### 3. Run the notebook
 
-Open `Image_Classifier.ipynb` in Jupyter Notebook or VS Code and run all cells.
+Open `Transfer_Learning_ResNet18_Image_Classification.ipynb` in Jupyter Notebook or VS Code and run all cells.
 
 ## References
 
