@@ -152,8 +152,8 @@ resnet-image-classifier/
 ### 1.Clone the repository
 
 ```bash
-git clone https://github.com/xxnxjah/resnet-image-classifier.git
-cd resnet-image-classifier
+git clone https://github.com/xxnxjah/An-Image-Classifier_with-Transfer-Learning.git
+cd An-Image-Classifier_with-Transfer-Learning
 ```
 
 ### 2. Install dependencies
